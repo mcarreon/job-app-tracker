@@ -1,0 +1,42 @@
+{
+  "name": "job-app-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcarreon/job-app-tracker.git"
+  },
+  "author": "Marlo Carreon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mcarreon/job-app-tracker/issues"
+  },
+  "homepage": "https://github.com/mcarreon/job-app-tracker#readme",
+  "dependencies": {
+    "@types/node": "^12.7.3",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-virtualized": "^9.21.4",
+    "@types/semantic-ui": "^2.2.7",
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^9.0.3",
+    "next-fonts": "^0.18.0",
+    "next-images": "^1.1.2",
+    "node-sass": "^4.12.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-markdown": "^4.1.0",
+    "react-virtualized": "^9.21.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.0",
+    "typescript": "^3.6.2"
+  }
+}
