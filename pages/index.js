@@ -1,16 +1,32 @@
 import Link from "next/link";
-import { Segment } from 'semantic-ui-react';
+import { useState, useEffect } from "react";
 
-import AddEntry from '../components/AddEntry';
-import JobGrid from '../components/JobGrid';
+import AddEntry from "../components/AddEntry";
+import JobGrid from "../components/JobGrid";
 
-const Index = () => (
-  <div className="table--body">
-    <AddEntry />
-    <div className="table--grid">
-      <JobGrid />
+import list from "../components/JobGrid/GridList";
+
+const Index = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setData(list);
+  }, [])
+
+  const addRow = (entry) => {
+    const newData = [...data];
+    newData.push(entry);
+    setData(newData);
+  }
+
+  return (
+    <div className="table--body">
+      <AddEntry addRow={addRow} />
+      <div className="table--grid">
+        <JobGrid data={data} />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Index;

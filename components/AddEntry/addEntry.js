@@ -10,22 +10,24 @@ const options = [
   { key: "acc", text: "Accepted", value: 2 }
 ];
 
-const AddEntry = () => {
-  const [entry, setEntry] = useState({
-    location: "",
-    url: "",
-    stack: [],
-    followUp: 0,
-    phoneScreen: 0,
-    techScreen: 0,
-    onsite: 0,
-    desc: "",
-    notes: "",
-    date: "",
-    company: "",
-    title: "",
-    status: 0
-  });
+const defaults = {
+  location: "",
+  url: "",
+  stack: [],
+  followUp: 0,
+  phoneScreen: 0,
+  techScreen: 0,
+  onsite: 0,
+  desc: "",
+  notes: "",
+  date: "",
+  company: "",
+  title: "",
+  status: 0
+};
+
+const AddEntry = (props) => {
+  const [entry, setEntry] = useState({});
   const [collapsed, setCollapsed] = useState(true);
 
   const collapseStyle = {
@@ -33,10 +35,17 @@ const AddEntry = () => {
   };
 
   const onDateChange = value => {
-    setEntry({
-      ...entry,
-      date: value
-    });
+    if (value) {
+      setEntry({
+        ...entry,
+        date: `${value.getMonth() + 1}/${value.getDate()}/${value.getFullYear()}`
+      });
+    } else {
+      setEntry({
+        ...entry,
+        date: value
+      });
+    }
   };
 
   const onExpand = () => {
@@ -63,7 +72,7 @@ const AddEntry = () => {
     
   };
 
-  const handleCheckbox = (e, {name, value}) => {
+  const handleCheckbox = (e, {name}) => {
     if (entry[name] === 1) {
       setEntry({
         ...entry,
@@ -77,13 +86,18 @@ const AddEntry = () => {
     }
   };
 
+  const handleSubmit = () => {
+    props.addRow(entry);
+    setEntry(defaults);
+  }
+
   useEffect(() => {
-    console.log(entry);
-  });
+    setEntry(defaults);
+  }, []);
 
   return (
     <div className="entry">
-      <Form className="entry--form">
+      <Form className="entry--form" onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Input
             fluid

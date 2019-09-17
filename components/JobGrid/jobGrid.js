@@ -2,15 +2,11 @@ import { Table, Label, Menu, Icon, Button, Checkbox } from "semantic-ui-react";
 import ReactTable from "react-table";
 import { useState, useEffect } from "react";
 import "react-table/react-table.css";
-import list from "./GridList/gridList";
+
 import GridExpand from "./GridExpand";
 
-const JobGrid = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    setData(list);
-  }, []);
+const JobGrid = (props) => {
+  const { data } = props;
 
   const toggleCheck = (column, key) => {
     const index = data.findIndex(x => x.id === key);
