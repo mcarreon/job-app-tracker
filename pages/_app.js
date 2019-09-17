@@ -2,6 +2,7 @@ import React from "react";
 import App from "next/app";
 import CompHeader from "../components/header";
 import "semantic-ui-css/semantic.min.css";
+import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
 import "../assets/style.scss";
 
 class MyApp extends App {

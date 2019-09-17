@@ -1,4 +1,4 @@
-import { Icon, Button } from "semantic-ui-react";
+import { Icon, Button, Checkbox } from "semantic-ui-react";
 
 const getStatus = status => {
   switch (status) {
@@ -25,6 +25,10 @@ const getStatus = status => {
   }
 };
 
+const getCheckbox = checked => {
+  return <div><Checkbox defaultChecked={checked ? true : false} toggle/></div>
+};  
+
 const columns = [
   {
     Header: "",
@@ -34,12 +38,12 @@ const columns = [
     id: "status",
     Header: "Status",
     Cell: rowInfo => {
-      console.log(rowInfo);
+      //console.log(rowInfo);
 
       return getStatus(rowInfo.row.status);
     },
     getProps: (state, rowInfo, column) => {
-      console.log(rowInfo);
+      //console.log(rowInfo);
 
       return {
         style: {
@@ -81,23 +85,43 @@ const columns = [
     accessor: props => <a href={props.url}>{props.url}</a>
   },
   {
+    id: "followup",
     Header: "Follow Up?",
     accessor: "followUp",
+    Cell: rowInfo => {
+      return (
+        <div>
+          <Checkbox
+            checked={rowInfo.row.followup ? true : false}
+            onChange={() => toggleCheck('followUp', rowInfo.original.id)}
+          />
+        </div>
+      );
+    },
     maxWidth: 150
   },
   {
     Header: "Phone Screen?",
     accessor: "phoneScreen",
+    Cell: rowInfo => {
+      return getCheckbox(rowInfo.row.phoneScreen);
+    },
     maxWidth: 150
   },
   {
     Header: "Tech Screen?",
     accessor: "techScreen",
+    Cell: rowInfo => {
+      return getCheckbox(rowInfo.row.techScreen);
+    },
     maxWidth: 150
   },
   {
     Header: "Onsite?",
     accessor: "onsite",
+    Cell: rowInfo => {
+      return getCheckbox(rowInfo.row.onsite);
+    },
     maxWidth: 150
   },
   {
