@@ -26,9 +26,25 @@ const defaults = {
   status: 0
 };
 
-const AddEntry = (props) => {
-  const [entry, setEntry] = useState({});
+const AddEntry = props => {
+  const [entry, setEntry] = useState(defaults);
+  const [stackHolder, setStack] = useState("");
   const [collapsed, setCollapsed] = useState(true);
+  const {
+    location,
+    url,
+    stack,
+    followUp,
+    phoneScreen,
+    techScreen,
+    onsite,
+    desc,
+    notes,
+    date,
+    company,
+    title,
+    status
+  } = entry;
 
   const collapseStyle = {
     display: collapsed ? "none" : "flex"
@@ -38,7 +54,8 @@ const AddEntry = (props) => {
     if (value) {
       setEntry({
         ...entry,
-        date: `${value.getMonth() + 1}/${value.getDate()}/${value.getFullYear()}`
+        date: `${value.getMonth() +
+          1}/${value.getDate()}/${value.getFullYear()}`
       });
     } else {
       setEntry({
@@ -53,47 +70,50 @@ const AddEntry = (props) => {
   };
 
   const handleChange = (e, { name, value }) => {
-    
-    if (name === 'stack') {
-      let parsed = value.replace(/\s/g, '').split(",").filter(el => {
-        return el != "";
-      });
-      setEntry({
-        ...entry,
-        [name]: parsed
-      });
-    } else {
+    if (name !== 'stack') {
       setEntry({
         ...entry,
         [name]: value
       });
+    } else {
+      setStack(value);
     }
-    
     
   };
 
-  const handleCheckbox = (e, {name}) => {
+  const handleCheckbox = (e, { name }) => {
     if (entry[name] === 1) {
       setEntry({
         ...entry,
         [name]: 0
-      })
+      });
     } else {
       setEntry({
         ...entry,
         [name]: 1
-      })
+      });
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    let temp = stackHolder;
+    let parsed = temp.replace(/\s/g, "")
+      .split(",")
+      .filter(el => {
+        return el != "";
+      });
+    console.log(parsed)
+    setEntry({
+      ...entry,
+      ["stack"]: parsed
+    });
     props.addRow(entry);
     setEntry(defaults);
-  }
+  };
 
   useEffect(() => {
-    setEntry(defaults);
-  }, []);
+    console.log(entry);
+  });
 
   return (
     <div className="entry">
@@ -106,6 +126,7 @@ const AddEntry = (props) => {
             width={4}
             name="company"
             onChange={handleChange}
+            value={company}
             required
           />
           <Form.Input
@@ -114,6 +135,7 @@ const AddEntry = (props) => {
             placeholder="Job Title"
             name="title"
             onChange={handleChange}
+            value={title}
             required
             width={4}
           />
@@ -122,6 +144,7 @@ const AddEntry = (props) => {
             onDateChange={value => onDateChange(value)}
             className="entry--date"
             name="date"
+            value={date}
             required
           />
           <Form.Select
@@ -129,6 +152,7 @@ const AddEntry = (props) => {
             options={options}
             name="status"
             onChange={handleChange}
+            value={status}
             required
           />
           <Form.Button className="entry--button">Save</Form.Button>
@@ -140,6 +164,7 @@ const AddEntry = (props) => {
             placeholder="Location"
             name="location"
             onChange={handleChange}
+            value={location}
             width={3}
           />
           <Form.Input
@@ -148,6 +173,7 @@ const AddEntry = (props) => {
             placeholder="Link to Posting"
             name="url"
             onChange={handleChange}
+            value={url}
             width={3}
           />
           <Form.Input
@@ -155,15 +181,36 @@ const AddEntry = (props) => {
             placeholder="List technology as a comma'd list"
             name="stack"
             onChange={handleChange}
+            value={stackHolder}
             width={3}
           />
         </Form.Group>
         <Form.Group inline style={collapseStyle}>
           <label>Events</label>
-          <Form.Checkbox label="Follow-Up" name="followUp" onChange={handleCheckbox}/>
-          <Form.Checkbox label="Phone Screen" name="phoneScreen" onChange={handleCheckbox}/>
-          <Form.Checkbox label="Tech Screen" name="techScreen" onChange={handleCheckbox}/>
-          <Form.Checkbox label="Onsite" name="onsite" onChange={handleCheckbox}/>
+          <Form.Checkbox
+            label="Follow-Up"
+            name="followUp"
+            onChange={handleCheckbox}
+            checked={followUp === 0 ? false : true}
+          />
+          <Form.Checkbox
+            label="Phone Screen"
+            name="phoneScreen"
+            onChange={handleCheckbox}
+            checked={phoneScreen === 0 ? false : true}
+          />
+          <Form.Checkbox
+            label="Tech Screen"
+            name="techScreen"
+            onChange={handleCheckbox}
+            checked={techScreen === 0 ? false : true}
+          />
+          <Form.Checkbox
+            label="Onsite"
+            name="onsite"
+            onChange={handleCheckbox}
+            checked={onsite === 0 ? false : true}
+          />
         </Form.Group>
         <Form.Group style={collapseStyle}>
           <Form.TextArea
@@ -171,6 +218,7 @@ const AddEntry = (props) => {
             placeholder="Add a description..."
             name="desc"
             onChange={handleChange}
+            value={desc}
             width={4}
           />
           <Form.TextArea
@@ -178,6 +226,7 @@ const AddEntry = (props) => {
             placeholder="Add some notes..."
             name="notes"
             onChange={handleChange}
+            value={notes}
             width={4}
           />
         </Form.Group>

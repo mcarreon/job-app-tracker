@@ -1,5 +1,6 @@
 const GridExpand = props => {
   const { desc, notes, stack } = props;
+  console.log(stack)
   let stackParse = stack.join(', ');
 
   return (
