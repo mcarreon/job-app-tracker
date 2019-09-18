@@ -1,5 +1,7 @@
 import { Menu, Icon } from "semantic-ui-react";
-import { useState } from 'react';
+
+import useAuth from "../../utils/hooks/useAuth";
+
 
 const CompHeader = () => {
   

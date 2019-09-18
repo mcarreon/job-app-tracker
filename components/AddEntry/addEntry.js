@@ -13,7 +13,7 @@ const options = [
 const defaults = {
   location: "",
   url: "",
-  stack: [],
+  stack: "",
   followUp: 0,
   phoneScreen: 0,
   techScreen: 0,
@@ -28,7 +28,7 @@ const defaults = {
 
 const AddEntry = props => {
   const [entry, setEntry] = useState(defaults);
-  const [stackHolder, setStack] = useState("");
+  const [dateHolder, setDate] = useState({});
   const [collapsed, setCollapsed] = useState(true);
   const {
     location,
@@ -51,18 +51,11 @@ const AddEntry = props => {
   };
 
   const onDateChange = value => {
-    if (value) {
-      setEntry({
-        ...entry,
-        date: `${value.getMonth() +
-          1}/${value.getDate()}/${value.getFullYear()}`
-      });
-    } else {
-      setEntry({
-        ...entry,
-        date: value
-      });
-    }
+  
+    setEntry({
+      ...entry, 
+      date: value
+    });
   };
 
   const onExpand = () => {
@@ -70,49 +63,28 @@ const AddEntry = props => {
   };
 
   const handleChange = (e, { name, value }) => {
-    if (name !== 'stack') {
-      setEntry({
-        ...entry,
-        [name]: value
-      });
-    } else {
-      setStack(value);
-    }
-    
+    setEntry({
+      ...entry,
+      [name]: value
+    });
   };
 
   const handleCheckbox = (e, { name }) => {
-    if (entry[name] === 1) {
-      setEntry({
-        ...entry,
-        [name]: 0
-      });
-    } else {
-      setEntry({
-        ...entry,
-        [name]: 1
-      });
-    }
-  };
-
-  const handleSubmit = async () => {
-    let temp = stackHolder;
-    let parsed = temp.replace(/\s/g, "")
-      .split(",")
-      .filter(el => {
-        return el != "";
-      });
-    console.log(parsed)
+    
     setEntry({
       ...entry,
-      ["stack"]: parsed
+      [name]: !entry.name
     });
+    
+  };
+
+  const handleSubmit = () => {
     props.addRow(entry);
     setEntry(defaults);
   };
 
   useEffect(() => {
-    console.log(entry);
+    console.log(date);
   });
 
   return (
@@ -144,6 +116,7 @@ const AddEntry = props => {
             onDateChange={value => onDateChange(value)}
             className="entry--date"
             name="date"
+            selected={date ? date : null}
             value={date}
             required
           />
@@ -181,7 +154,7 @@ const AddEntry = props => {
             placeholder="List technology as a comma'd list"
             name="stack"
             onChange={handleChange}
-            value={stackHolder}
+            value={stack}
             width={3}
           />
         </Form.Group>
@@ -191,25 +164,25 @@ const AddEntry = props => {
             label="Follow-Up"
             name="followUp"
             onChange={handleCheckbox}
-            checked={followUp === 0 ? false : true}
+            checked={followUp}
           />
           <Form.Checkbox
             label="Phone Screen"
             name="phoneScreen"
             onChange={handleCheckbox}
-            checked={phoneScreen === 0 ? false : true}
+            checked={phoneScreen}
           />
           <Form.Checkbox
             label="Tech Screen"
             name="techScreen"
             onChange={handleCheckbox}
-            checked={techScreen === 0 ? false : true}
+            checked={techScreen}
           />
           <Form.Checkbox
             label="Onsite"
             name="onsite"
             onChange={handleCheckbox}
-            checked={onsite === 0 ? false : true}
+            checked={onsite}
           />
         </Form.Group>
         <Form.Group style={collapseStyle}>

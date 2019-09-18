@@ -12,16 +12,15 @@ const JobGrid = (props) => {
     const index = data.findIndex(x => x.id === key);
     const newArr = [...data];
     newArr[index][column] = !newArr[index][column];
-    setData(newArr);
+    props.updateData(newArr);
   };
 
   const handleDelete = key => {
     const index = data.findIndex(x => x.id === key);
     const newArr = [...data];
     newArr.splice(index, 1);
-    console.log(newArr);
 
-    setData(newArr);
+    props.updateData(newArr);
   };
 
   const columns = [
@@ -60,7 +59,11 @@ const JobGrid = (props) => {
     },
     {
       Header: "Date",
-      accessor: "date"
+      accessor: "date",
+      Cell: ({ row }) => {
+        let dateParse = `${row.date.getMonth() + 1}/${row.date.getDate()}/${row.date.getFullYear()}`
+        return <div>{dateParse}</div>
+      }
     },
     {
       Header: "Company",

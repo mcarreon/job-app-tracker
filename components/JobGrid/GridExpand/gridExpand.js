@@ -1,7 +1,5 @@
 const GridExpand = props => {
   const { desc, notes, stack } = props;
-  console.log(stack)
-  let stackParse = stack.join(', ');
 
   return (
     <div className="grid--expand">
@@ -15,7 +13,7 @@ const GridExpand = props => {
       </div>
       <div>
         <h3>Stack</h3>
-        <p>{stackParse}</p>
+        <p>{stack}</p>
       </div>
     </div>
   );

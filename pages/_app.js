@@ -1,6 +1,9 @@
 import React from "react";
 import App from "next/app";
-import CompHeader from "../components/header";
+
+import CompHeader from "../components/Header";
+import { AuthProvider } from '../utils/contexts/AuthContext';
+
 import "semantic-ui-css/semantic.min.css";
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
 import "../assets/style.scss";
@@ -24,8 +27,10 @@ class MyApp extends App {
 
     return (
       <div className="app--body">
-        <CompHeader />
-        <Component {...pageProps} />
+        <AuthProvider>
+          <CompHeader />
+          <Component {...pageProps} />
+        </AuthProvider>
       </div>
     );
   }
