@@ -30,7 +30,7 @@
     "next": "^9.0.3",
     "next-fonts": "^0.18.0",
     "next-images": "^1.1.2",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-markdown": "^4.1.0",
